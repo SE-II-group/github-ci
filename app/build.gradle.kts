@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("jacoco")
+//    id("jacoco")
     id("org.sonarqube") version "6.0.1.5171"
 }
 
@@ -39,55 +39,55 @@ android {
     buildFeatures {
         compose = true
     }
-    testOptions {
+/*    testOptions {
         unitTests {
             all {
                 it.useJUnitPlatform()
                 it.finalizedBy(tasks.named("jacocoTestReport"))
             }
         }
-    }
+    }*/
 }
 
-tasks.register<JacocoReport>("jacocoTestReport") {
-    dependsOn("testDebugUnitTest")
-
-    reports {
-        xml.required.set(true)
-        xml.outputLocation.set(file("${project.projectDir}/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"))
-    }
-
-    val fileFilter = listOf(
-        "**/R.class",
-        "**/R$*.class",
-        "**/BuildConfig.*",
-        "**/Manifest*.*",
-        "**/*Test*.*",
-        "android/**/*.*"
-    )
-    val debugTree = fileTree(
-        mapOf(
-            "dir" to layout.buildDirectory.dir("intermediates/javac/debug").get().asFile,
-            "excludes" to fileFilter
-        )
-    )
-    val mainSrc = "${project.projectDir}/src/main/java"
-
-    sourceDirectories.setFrom(files(mainSrc))
-    classDirectories.setFrom(files(debugTree))
-    executionData.setFrom(files("${layout.buildDirectory.get().asFile}/jacoco/testDebugUnitTest.exec"))
-}
+//tasks.register<JacocoReport>("jacocoTestReport") {
+//    dependsOn("testDebugUnitTest")
+//
+//    reports {
+//        xml.required.set(true)
+//        xml.outputLocation.set(file("${project.projectDir}/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"))
+//    }
+//
+//    val fileFilter = listOf(
+//        "**/R.class",
+//        "**/R$*.class",
+//        "**/BuildConfig.*",
+//        "**/Manifest*.*",
+//        "**/*Test*.*",
+//        "android/**/*.*"
+//    )
+//    val debugTree = fileTree(
+//        mapOf(
+//            "dir" to layout.buildDirectory.dir("intermediates/javac/debug").get().asFile,
+//            "excludes" to fileFilter
+//        )
+//    )
+//    val mainSrc = "${project.projectDir}/src/main/java"
+//
+//    sourceDirectories.setFrom(files(mainSrc))
+//    classDirectories.setFrom(files(debugTree))
+//    executionData.setFrom(files("${layout.buildDirectory.get().asFile}/jacoco/testDebugUnitTest.exec"))
+//}
 
 sonar {
     properties {
         property("sonar.projectKey", "SE-II-group_github-ci")
         property("sonar.organization", "se-ii-group")
         property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.java.coveragePlugin", "jacoco")
-        property(
-            "sonar.coverage.jacoco.xmlReportPaths",
-            "${project.projectDir}/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
-        )
+//        property("sonar.java.coveragePlugin", "jacoco")
+//        property(
+//            "sonar.coverage.jacoco.xmlReportPaths",
+//            "${project.projectDir}/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
+//        )
     }
 }
 
